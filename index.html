@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Je7wjw8</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MENO SHAWMING | المنطقة المحظورة</title>
+
+    <style>
+
+        :root { --primary: #ff4b2b; --secondary: #8a2be2; --bg: #0d1117; --card: rgba(22, 27, 34, 0.95); --text: #fff; }
+
+        
+
+        /* الخلفية المرتبطة بملف bg.jpg */
+
+        body { 
+
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
+
+                        url('https://raw.githubusercontent.com/Menoshawming/Menoshawming/main/bg.jpg');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
+
+            color: var(--text); 
+
+            font-family: 'Segoe UI', sans-serif; 
+
+            margin: 0; padding: 0; 
+
+            overflow-x: hidden; 
+
+        }
+
+        
+
+        /* شاشة الدخول */
+
+        #auth-screen { position: fixed; inset: 0; background: rgba(9, 10, 15, 0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+
+        .auth-box { background: var(--card); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; border: 1px solid #333; box-shadow: 0 10px 30px rgba(255, 75, 43, 0.2); }
+
+        
+
+        #main-ui { display: none; }
+
+        .navbar { background: var(--card); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+
+        
+
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
+
+        .welcome-banner { 
+
+            text-align: center; 
+
+            padding: 50px 20px; 
+
+            background: rgba(13, 17, 23, 0.6);
+
+            border-radius: 20px; 
+
+            margin-bottom: 30px; 
+
+            border: 1px solid var(--primary);
+
+            backdrop-filter: blur(5px);
+
+        }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+
+        .stat-card { background: var(--card); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #333; }
+
+        
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        .product-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #444; transition: 0.3s; position: relative; }
+
+        .product-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 10px; font-family: inherit; transition: 0.3s; }
+
+        .btn-buy { background: var(--primary); color: white; }
+
+        .btn-view { background: #238636; color: white; }
+
+        .btn-guest { background: #333; color: #fff; margin-top: 15px; border: 1px solid #444; }
+
+        .btn-whatsapp { background: #25D366; color: white; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        input { width: 100%; padding: 12px; margin: 8px 0; background: #000; color: #fff; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; text-align: center; }
+
+        
+
+        #admin-panel { background: #1c2128; border: 2px dashed var(--secondary); padding: 20px; border-radius: 15px; margin-bottom: 30px; display: none; }
+
+        #viewer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; display: none; flex-direction: column; }
+
+        #viewer-header { padding: 15px; background: #000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
+
+        #viewer-frame { flex-grow: 1; border: none; width: 100%; height: 100%; }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="viewer-overlay">
+
+        <div id="viewer-header">
+
+            <span id="viewer-title" style="color: var(--primary); font-weight: bold;">جاري فتح الملف...</span>
+
+            <button onclick="closeViewer()" style="background:red; color:white; border:none; padding:8px 20px; border-radius:8px; cursor:pointer; font-weight: bold;">إغلاق X</button>
+
+        </div>
+
+        <iframe id="viewer-frame" src="" oncontextmenu="return false;"></iframe>
+
+    </div>
+
+    <div id="auth-screen">
+
+        <div class="auth-box">
+
+            <h1 style="color:var(--primary); font-size: 35px; margin-bottom: 10px;">MENO SHAWMING</h1>
+
+            <p style="color: gray; margin-bottom: 25px;">خلف القناع.. تكمن الحقيقة</p>
+
+            <input type="email" id="login-email" placeholder="البريد الإلكتروني">
+
+            <input type="password" id="login-pass" placeholder="كلمة المرور">
+
+            <button class="btn btn-buy" onclick="handleAuth('login')">تسجيل الدخول</button>
+
+            <button class="btn" style="background:#21262d; color:#58a6ff;" onclick="handleAuth('signup')">إنشاء حساب جديد</button>
+
+            
+
+            <div style="margin: 15px 0; border-bottom: 1px solid #333; position: relative;">
+
+                <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #161b22; padding: 0 10px; font-size: 12px; color: #666;">أو</span>
+
+            </div>
+
+            <button class="btn btn-guest" onclick="loginAsGuest()">الدخول كضيف 👤</button>
+
+        </div>
+
+    </div>
+
+    <div id="main-ui">
+
+        <div class="navbar">
+
+            <div style="font-weight:bold; color: var(--primary); font-size: 20px;">MENO SHAWMING STORE</div>
+
+            <button onclick="logout()" style="border:1px solid red; color:red; background:none; cursor:pointer; padding:5px 15px; border-radius:8px;">خروج</button>
+
+        </div>
+
+        <div class="container">
+
+            <div class="welcome-banner">
+
+                <h2 style="color: var(--primary); text-shadow: 2px 2px 15px #000; font-size: 28px;">أهلاً بك في المنطقة المحظورة</h2>
+
+                <p style="color: #eee; font-style: italic; font-size: 16px; margin-top: 12px; line-height: 1.6;">"مَن يمتلك المعلومة.. يمتلك السيطرة!"</p>
+
+            </div>
+
+            <div id="admin-panel">
+
+                <h3 style="color:var(--secondary); margin-bottom: 15px;">🛠 لوحة تحكم المقنعين</h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+
+                    <div>
+
+                        <input type="text" id="adm-u-uid" placeholder="UID الطالب">
+
+                        <input type="number" id="adm-u-amt" placeholder="المبلغ">
+
+                        <button class="btn btn-view" onclick="adminCharge()">شحن رصيد الطالب ✅</button>
+
+                    </div>
+
+                    <div>
+
+                        <input type="text" id="p-name" placeholder="اسم المادة">
+
+                        <input type="number" id="p-price" placeholder="السعر">
+
+                        <input type="text" id="p-link" placeholder="رابط الملف">
+
+                        <button class="btn btn-buy" onclick="adminAddProduct()">نشر الملف الآن 🚀</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card"> رصيدك الحالي: <h2 id="u-bal" style="color:#25D366;">0 LE</h2> </div>
+
+                <div class="stat-card"> الـ ID الخاص بك: <div id="u-id" style="font-size:10px; color:var(--secondary); margin-top:8px; word-break: break-all;">جاري التحميل...</div> </div>
+
+            </div>
+
+            <button class="btn btn-whatsapp" onclick="contactWhatsApp()">شحن حسابي (واتساب) 💬</button>
+
+            <div id="products-list" class="product-grid"></div>
+
+        </div>
+
+    </div>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+        import { getDatabase, ref, set, get, update, increment, onValue, remove } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyBgd5MkjrAOTtt-hhmuGVCh26klzEMB1ag",
+
+            authDomain: "menoshawming-cb8a2.firebaseapp.com",
+
+            databaseURL: "https://menoshawming-cb8a2-default-rtdb.firebaseio.com",
+
+            projectId: "menoshawming-cb8a2",
+
+            appId: "1:558599729266:web:f8a7799809ebf92eb292eb"
+
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const db = getDatabase(app);
+
+        const ADMIN_ID = "jwrC3vw807avqiAW80mIJaxGnWb2"; 
+
+        onAuthStateChanged(auth, async (user) => {
+
+            if (user) {
+
+                document.getElementById('auth-screen').style.display = 'none';
+
+                document.getElementById('main-ui').style.display = 'block';
+
+                document.getElementById('u-id').innerText = user.uid;
+
+                document.getElementById('admin-panel').style.display = (user.uid === ADMIN_ID) ? 'block' : 'none';
+
+                onValue(ref(db, 'users/' + user.uid), (snap) => {
+
+                    if(snap.exists()) document.getElementById('u-bal').innerText = (snap.val().balance || 0).toFixed(2) + " LE";
+
+                });
+
+                loadItems(user.uid);
+
+            } else {
+
+                document.getElementById('auth-screen').style.display = 'flex';
+
+                document.getElementById('main-ui').style.display = 'none';
+
+            }
+
+        });
+
+        window.loginAsGuest = () => {
+
+            alert("⚠️ عزيزي الضيف لا يمكنك استرجاع الاموال في حاله فقدان حسابك");
+
+            signInAnonymously(auth).catch(err => alert(err.message));
+
+        };
+
+        window.handleAuth = (type) => {
+
+            const email = document.getElementById('login-email').value, pass = document.getElementById('login-pass').value;
+
+            if(!email || !pass) return alert("يرجى ملء البيانات");
+
+            const action = type === 'login' ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
+
+            action(auth, email, pass).catch(err => alert(err.message));
+
+        };
+
+        window.contactWhatsApp = () => {
+
+            const uid = auth.currentUser ? auth.currentUser.uid : "unknown";
+
+            window.open(`https://wa.me/201552577467?text=أريد شحن رصيد ID: ${uid}`, '_blank');
+
+        };
+
+        window.adminAddProduct = async () => {
+
+            const name = document.getElementById('p-name').value;
+
+            const price = parseFloat(document.getElementById('p-price').value);
+
+            const link = document.getElementById('p-link').value;
+
+            if(!name || isNaN(price) || !link) return alert("يرجى ملء البيانات");
+
+            let finalLink = link.includes('drive.google.com') ? link.replace('/view', '/preview').split('?')[0] : link;
+
+            await set(ref(db, 'products/' + Date.now()), { name, price, link: finalLink });
+
+            alert("تم النشر!");
+
+        };
+
+        function loadItems(uid) {
+
+            onValue(ref(db, 'products'), async (snap) => {
+
+                const uSnap = await get(ref(db, 'users/' + uid));
+
+                const bought = uSnap.val()?.purchased || [];
+
+                let h = '';
+
+                snap.forEach((child) => {
+
+                    const p = child.val(); const pid = child.key;
+
+                    const owns = bought.includes(pid) || p.price === 0;
+
+                    h += `<div class="product-card">
+
+                        <h3 style="color:var(--primary);">${p.name}</h3>
+
+                        <p style="color:gray;">السعر: ${p.price} LE</p>
+
+                        ${owns ? `<button class="btn btn-view" onclick="viewMaterial('${p.link}', '${p.name}')">فتح 👁️</button>` : 
+
+                        `<button class="btn btn-buy" onclick="buy('${pid}', ${p.price})">شراء 🔓</button>`}
+
+                        ${auth.currentUser.uid === ADMIN_ID ? `<button class="btn btn-del" onclick="remove(ref(db, 'products/${pid}'))" style="border:none; background:none; color:red; cursor:pointer;">حذف 🗑️</button>` : ''}
+
+                    </div>`;
+
+                });
+
+                document.getElementById('products-list').innerHTML = h || '<p style="text-align:center; padding:20px;">لا يوجد محتوى</p>';
+
+            });
+
+        }
+
+        window.viewMaterial = (link, name) => {
+
+            document.getElementById('viewer-title').innerText = name;
+
+            document.getElementById('viewer-frame').src = link;
+
+            document.getElementById('viewer-overlay').style.display = 'flex';
+
+        };
+
+        window.closeViewer = () => {
+
+            document.getElementById('viewer-overlay').style.display = 'none';
+
+            document.getElementById('viewer-frame').src = "";
+
+        };
+
+        window.buy = async (pid, price) => {
+
+            const userRef = ref(db, 'users/' + auth.currentUser.uid);
+
+            const userSnap = await get(userRef);
+
+            const balance = userSnap.val()?.balance || 0;
+
+            if(balance >= price) {
+
+                const purchased = userSnap.val()?.purchased || []; purchased.push(pid);
+
+                await update(userRef, { balance: increment(-price), purchased: purchased });
+
+                alert("تم الشراء!");
+
+            } else alert("رصيدك غير كافٍ");
+
+        };
+
+        window.adminCharge = async () => {
+
+            const id = document.getElementById('adm-u-uid').value;
+
+            const amount = parseFloat(document.getElementById('adm-u-amt').value);
+
+            await update(ref(db, 'users/' + id), { balance: increment(amount) });
+
+            alert("تم الشحن!");
+
+        };
+
+        window.logout = () => signOut(auth);
+
+    </script>
+
+</body>
+
+</html>
+    
+  </body>
+  
+</html>

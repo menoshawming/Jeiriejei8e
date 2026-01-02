@@ -25,231 +25,31 @@
 
     <style>
 
-        * {
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
 
-            box-sizing: border-box;
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
 
-            font-family: 'Cairo', sans-serif;
+        #chat-window { width: 100%; max-width: 450px; height: 85vh; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
 
-        }
+        .header { background: #1a73e8; color: white; padding: 20px; text-align: center; font-weight: bold; }
 
-        body {
+        #messages { flex: 1; padding: 20px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 15px; }
 
-            background-color: #f0f2f5;
+        .msg { max-width: 80%; padding: 12px; border-radius: 15px; font-size: 0.9rem; line-height: 1.5; }
 
-            margin: 0;
+        .user { align-self: flex-end; background: #1a73e8; color: white; border-bottom-left-radius: 2px; }
 
-            display: flex;
+        .ai { align-self: flex-start; background: #fff; border: 1px solid #ddd; border-bottom-right-radius: 2px; }
 
-            justify-content: center;
+        .input-area { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; }
 
-            align-items: center;
+        input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; }
 
-            height: 100vh;
+        button { background: #1a73e8; color: white; border: none; padding: 0 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
 
-        }
+        button:disabled { background: #ccc; }
 
-        #chat-window {
-
-            width: 100%;
-
-            max-width: 450px;
-
-            height: 90vh;
-
-            background: #fff;
-
-            display: flex;
-
-            flex-direction: column;
-
-            border-radius: 20px;
-
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-
-            overflow: hidden;
-
-            border: 1px solid #e0e0e0;
-
-        }
-
-        /* رأس الصفحة */
-
-        .chat-header {
-
-            background: linear-gradient(135deg, #1a73e8, #0d47a1);
-
-            color: white;
-
-            padding: 20px;
-
-            text-align: center;
-
-        }
-
-        .chat-header h2 {
-
-            margin: 0;
-
-            font-size: 1.2rem;
-
-        }
-
-        .chat-header span {
-
-            font-size: 0.8rem;
-
-            opacity: 0.9;
-
-        }
-
-        /* منطقة الرسائل */
-
-        #chat-messages {
-
-            flex: 1;
-
-            padding: 20px;
-
-            overflow-y: auto;
-
-            background-color: #f9f9f9;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 15px;
-
-        }
-
-        .msg {
-
-            max-width: 85%;
-
-            padding: 12px 16px;
-
-            border-radius: 15px;
-
-            font-size: 0.95rem;
-
-            line-height: 1.6;
-
-            word-wrap: break-word;
-
-        }
-
-        .user-msg {
-
-            align-self: flex-end;
-
-            background-color: #1a73e8;
-
-            color: white;
-
-            border-bottom-left-radius: 2px;
-
-        }
-
-        .ai-msg {
-
-            align-self: flex-start;
-
-            background-color: #fff;
-
-            color: #333;
-
-            border: 1px solid #ddd;
-
-            border-bottom-right-radius: 2px;
-
-        }
-
-        /* منطقة الإدخال */
-
-        .chat-input-area {
-
-            padding: 15px;
-
-            background: #fff;
-
-            border-top: 1px solid #eee;
-
-            display: flex;
-
-            gap: 10px;
-
-        }
-
-        #userInput {
-
-            flex: 1;
-
-            padding: 12px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 25px;
-
-            outline: none;
-
-            transition: 0.3s;
-
-        }
-
-        #userInput:focus {
-
-            border-color: #1a73e8;
-
-        }
-
-        button {
-
-            background-color: #1a73e8;
-
-            color: white;
-
-            border: none;
-
-            padding: 0 20px;
-
-            border-radius: 25px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            transition: 0.3s;
-
-        }
-
-        button:hover {
-
-            background-color: #0d47a1;
-
-        }
-
-        button:disabled {
-
-            background-color: #ccc;
-
-        }
-
-        /* مؤشر التحميل */
-
-        .typing {
-
-            font-style: italic;
-
-            font-size: 0.8rem;
-
-            color: #777;
-
-            display: none;
-
-            margin-bottom: 10px;
-
-        }
+        .loading { font-size: 0.8rem; color: #777; margin: 5px 20px; display: none; }
 
     </style>
 
@@ -259,27 +59,21 @@
 
 <div id="chat-window">
 
-    <div class="chat-header">
+    <div class="header">مساعد MENO Shawming الذكي</div>
 
-        <h2>MENO Shawming AI</h2>
+    <div id="messages">
 
-        <span>مساعدك الذكي في المتجر</span>
-
-    </div>
-
-    <div id="chat-messages">
-
-        <div class="msg ai-msg">مرحباً بك في متجر MENO Shawming! أنا Gemini، مساعدك الذكي. كيف أساعدك اليوم؟</div>
+        <div class="msg ai">أهلاً بك في MENO Shawming! أنا مساعدك الذكي، كيف أساعدك اليوم؟</div>
 
     </div>
 
-    <div id="typing-indicator" class="typing" style="padding: 0 20px;">Gemini يكتب الآن...</div>
+    <div id="loading" class="loading">Gemini يفكر الآن...</div>
 
-    <div class="chat-input-area">
+    <div class="input-area">
 
-        <input type="text" id="userInput" placeholder="اسأل عن المنتجات أو الأسعار..." autocomplete="off">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." autocomplete="off">
 
-        <button id="sendBtn">إرسال</button>
+        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
 
     </div>
 
@@ -287,55 +81,43 @@
 
 <script>
 
-    // بيانات الـ API الخاصة بك
+    // الرابط الخاص بك الذي استخرجته من Google Apps Script
 
-    const API_KEY = "AIzaSyAXV3ITsM_8-J1zofrJOoz-Lv3eKuLq7_E"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxY0IyLk3nRMPyMW2m9DPo0DiPWY-L6Pcqvor3mn597Bcp0dLJvZLGhiEUG0oo2_HG/exec";
 
-    const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    async function sendMessage() {
 
-    const sendBtn = document.getElementById('sendBtn');
+        const input = document.getElementById('userInput');
 
-    const userInput = document.getElementById('userInput');
+        const messages = document.getElementById('messages');
 
-    const chatMessages = document.getElementById('chat-messages');
+        const btn = document.getElementById('sendBtn');
 
-    const typingIndicator = document.getElementById('typing-indicator');
+        const loader = document.getElementById('loading');
 
-    async function handleChat() {
-
-        const text = userInput.value.trim();
+        const text = input.value.trim();
 
         if (!text) return;
 
-        // 1. عرض رسالة المستخدم
+        // عرض رسالة المستخدم
 
-        appendMessage(text, 'user-msg');
+        appendMessage(text, 'user');
 
-        userInput.value = '';
+        input.value = '';
 
-        
+        btn.disabled = true;
 
-        // 2. إظهار مؤشر التحميل وتعطيل الزر
-
-        typingIndicator.style.display = 'block';
-
-        sendBtn.disabled = true;
+        loader.style.display = 'block';
 
         try {
 
-            const response = await fetch(URL, {
+            const response = await fetch(SCRIPT_URL, {
 
                 method: "POST",
 
-                headers: { "Content-Type": "application/json" },
-
                 body: JSON.stringify({
 
-                    contents: [{
-
-                        parts: [{ text: `أنت مساعد ذكي لمتجر "MENO Shawming". وظيفتك مساعدة الزبائن بلباقة. السؤال: ${text}` }]
-
-                    }]
+                    contents: [{ parts: [{ text: "أنت مساعد ودود لمتجر MENO Shawming. أجب باختصار على: " + text }] }]
 
                 })
 
@@ -343,55 +125,45 @@
 
             const data = await response.json();
 
-            if (data.error) {
+            const aiText = data.candidates[0].content.parts[0].text;
 
-                throw new Error(data.error.message);
-
-            }
-
-            const aiResponse = data.candidates[0].content.parts[0].text;
-
-            appendMessage(aiResponse, 'ai-msg');
+            appendMessage(aiText, 'ai');
 
         } catch (error) {
 
-            console.error("Error:", error);
-
-            appendMessage("نعتذر، واجهت مشكلة في الاتصال بالسيرفر. تأكد من تفعيل الـ API الخاص بك.", 'ai-msg');
+            appendMessage("عذراً، واجهت مشكلة صغيرة. حاول مرة أخرى.", 'ai');
 
         } finally {
 
-            typingIndicator.style.display = 'none';
+            btn.disabled = false;
 
-            sendBtn.disabled = false;
-
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            loader.style.display = 'none';
 
         }
 
     }
 
-    function appendMessage(text, className) {
+    function appendMessage(text, type) {
 
-        const msgDiv = document.createElement('div');
+        const div = document.createElement('div');
 
-        msgDiv.className = `msg ${className}`;
+        div.className = `msg ${type}`;
 
-        msgDiv.innerText = text;
+        div.innerText = text;
 
-        chatMessages.appendChild(msgDiv);
+        const container = document.getElementById('messages');
 
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        container.appendChild(div);
+
+        container.scrollTop = container.scrollHeight;
 
     }
 
-    // أحداث الضغط
+    // الإرسال عند الضغط على Enter
 
-    sendBtn.addEventListener('click', handleChat);
+    document.getElementById('userInput').addEventListener('keypress', (e) => {
 
-    userInput.addEventListener('keypress', (e) => {
-
-        if (e.key === 'Enter') handleChat();
+        if (e.key === 'Enter') sendMessage();
 
     });
 
